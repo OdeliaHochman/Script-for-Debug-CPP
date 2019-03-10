@@ -13,7 +13,7 @@ successfullmake=$?
 if [ "$successfullmake" -gt "0" ]; then
 echo Compilation$'\t'Memory leaks$'\t'Thread race$'\n'
 echo FAIL$'\t'FAIL$'\t'FAIL$'\t'
-return 7
+exit 7
 fi
 valgrind --leak-check=full --error-exitcode=1 -q ./$program $@ >/dev/null 2>&1
 resv=$?
@@ -39,15 +39,15 @@ echo Compilation$'\t'Memory leaks$'\t'Thread race$'\n'
 ans=$successfullmake$check1$check2
 if [ $ans -eq "000" ]; then
 echo PASS$'\t'PASS$'\t'PASS
-return 0
+exit 0
 elif [ $ans -eq "010" ]; then
 echo PASS$'\t'FAIL$'\t'PASS
-return 2
+exit 2
 elif [ $ans -eq "001" ]; then
 echo PASS$'\t'PASS$'\t'FAIL
-return 1
+exit 1
 else [ $ans -eq "011" ]; 
 echo PASS$'\t'FAIL$'\t'FAIL
-return 3
+exit 3
 fi
 
