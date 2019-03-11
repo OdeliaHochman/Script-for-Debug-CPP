@@ -25,11 +25,12 @@ else
 check1=0
 fi
 
-valgrind --tool=helgrind -q ./$program $@ >/dev/null 2>&1
+valgrind --tool=helgrind --error-exitcode=1 -q ./$program $@ >/dev/null 2>&1
 resh=$?
 if [ "$resh" -gt "0" ]; then
 
 check2=1
+
 else
 
 check2=0
